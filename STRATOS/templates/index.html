@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRATOS - Multi-Agent IA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0f1a 0%, #0a1a0a 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        .container { max-width: 1600px; margin: 0 auto; background: rgba(10, 20, 15, 0.95); min-height: 100vh; }
+        .logo { padding: 20px 30px; font-size: 28px; font-weight: bold; background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%); border-bottom: 1px solid rgba(80, 255, 36, 0.3); }
+        .logo span { color: #bfffaf; }
+        .header { background: linear-gradient(135deg, #1a2a1a 0%, #0f1a0f 100%); padding: 20px 30px; text-align: center; border-bottom: 1px solid rgba(80, 255, 36, 0.2); }
+        .subtitle { color: #aaa; font-size: 14px; }
+        .dashboard { display: flex; gap: 0; min-height: calc(100vh - 130px); }
+        
+        /* Colonne de contrôle */
+        .control-column { width: 280px; background: linear-gradient(135deg, #0f1a0f 0%, #0a100a 100%); border-right: 1px solid rgba(80, 255, 36, 0.2); padding: 20px; }
+        .control-card { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; margin-bottom: 20px; }
+        .control-card h3 { color: #bfffaf; margin-bottom: 15px; font-size: 16px; }
+        .control-group { margin-bottom: 15px; }
+        .control-group label { display: block; margin-bottom: 5px; font-size: 13px; color: #aaa; }
+        select, .btn-primary { width: 100%; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(80,255,36,0.3); border-radius: 6px; color: white; font-size: 13px; }
+        .btn-primary { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .btn-primary:hover { background: linear-gradient(135deg, #388e3c 0%, #2e7d32 100%); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Colonne actualités */
+        .news-section { flex: 1; padding: 20px; overflow-y: auto; }
+        .news-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid rgba(80,255,36,0.3); padding-bottom: 10px; }
+        .news-header h2 { color: #bfffaf; font-size: 18px; }
+        .news-count { background: rgba(80,255,36,0.2); padding: 4px 12px; border-radius: 20px; font-size: 14px; }
+        .news-list { display: flex; flex-direction: column; gap: 15px; }
+        .news-item { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; cursor: pointer; border: 1px solid rgba(80,255,36,0.1); }
+        .news-item:hover { background: rgba(80,255,36,0.08); border-color: rgba(80,255,36,0.3); }
+        .news-title { font-weight: bold; color: #adfd98; margin-bottom: 8px; }
+        .news-summary { color: #bbb; font-size: 13px; margin-bottom: 8px; }
+        .news-meta { display: flex; justify-content: space-between; font-size: 11px; color: #888; }
+        .news-source { color: #c9fdbc; }
+        
+        /* Colonne analyse */
+        .analysis-section { width: 400px; background: rgba(10,18,12,0.9); border-left: 1px solid rgba(80,255,36,0.2); padding: 20px; overflow-y: auto; }
+        .analysis-header h2 { color: #bfffaf; font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid rgba(80,255,36,0.3); padding-bottom: 10px; }
+        .analysis-content { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 15px; font-size: 13px; line-height: 1.6; color: #ddd; max-height: 500px; overflow-y: auto; }
+        .analysis-content h3 { color: #50ff24; font-size: 15px; margin: 15px 0 10px; }
+        .analysis-content strong { color: #50ff24; }
+        
+        .loading { text-align: center; padding: 40px; color: #888; }
+        .spinner { border: 3px solid rgba(80,255,36,0.1); border-top: 3px solid #50ff24; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .workflow-status { margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 6px; font-size: 12px; text-align: center; }
+        .trends-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+        .trend-tag { background: rgba(80,255,36,0.1); border: 1px solid rgba(80,255,36,0.2); border-radius: 20px; padding: 5px 12px; font-size: 12px; }
+        
+        @media (max-width: 1000px) { .dashboard { flex-direction: column; } .control-column { width: 100%; } .analysis-section { width: 100%; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">STRATOS<span>intelligence</span></div>
+        <div class="header">
+            <h1>Système de Traitement et d'Analyse Stratégique Orienté Synthèse</h1>
+            <div class="subtitle">Collecteur RSS | RAG Multi Corpus | Google Trends | Analyste IA | Orchestration Séquentielle</div>
+        </div>
+        
+        <div class="dashboard">
+            <!-- Colonne gauche -->
+            <div class="control-column">
+                <div class="control-card">
+                    <h3>⚙️ Orchestration</h3>
+                    <div class="control-group">
+                        <label>📰 Source</label>
+                        <select id="source-type">
+                            <option value="both">🌍 International + 🇲🇦 National</option>
+                            <option value="international">🌍 International uniquement</option>
+                            <option value="national">🇲🇦 National uniquement</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>🎯 Type d'analyse</label>
+                        <select id="analysis-type">
+                            <option value="impact">Impact international sur le Maroc</option>
+                            <option value="national">Synthèse nationale</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>🧠 Mode</label>
+                        <select id="hitl-mode">
+                            <option value="auto">Automatique</option>
+                            <option value="manual">Avec validation humaine (console)</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="runWorkflow()" id="run-btn">
+                        🚀 LANCER LE WORKFLOW
+                    </button>
+                    <div id="workflow-status" class="workflow-status">Prêt</div>
+                </div>
+                
+                <div class="control-card">
+                    <h3>📈 Google Trends</h3>
+                    <div id="trends-display" class="trends-list">
+                        <div class="loading-mini">Lancez le workflow pour voir les tendances</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Colonne centrale -->
+            <div class="news-section">
+                <div class="news-header">
+                    <h2>📡 Actualités collectées</h2>
+                    <div class="news-count" id="news-count">0</div>
+                </div>
+                <div class="news-list" id="news-list">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Cliquez sur "LANCER LE WORKFLOW" pour collecter les actualités
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Colonne droite -->
+            <div class="analysis-section">
+                <div class="analysis-header">
+                    <h2>📝 Analyse & Synthèse</h2>
+                </div>
+                <div id="analysis-result" class="analysis-content">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        L'analyse apparaîtra ici après exécution du workflow
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentArticles = [];
+        
+        async function runWorkflow() {
+            const button = document.getElementById('run-btn');
+            const statusDiv = document.getElementById('workflow-status');
+            const newsContainer = document.getElementById('news-list');
+            const analysisDiv = document.getElementById('analysis-result');
+            const trendsDiv = document.getElementById('trends-display');
+            
+            button.disabled = true;
+            button.textContent = '⏳ Workflow en cours...';
+            statusDiv.innerHTML = '🔄 Collecte des actualités...';
+            
+            newsContainer.innerHTML = '<div class="loading"><div class="spinner"></div>Collecte en cours...</div>';
+            analysisDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Génération de l\'analyse...</div>';
+            
+            const sourceType = document.getElementById('source-type').value;
+            const analysisType = document.getElementById('analysis-type').value;
+            const hitlMode = document.getElementById('hitl-mode').value;
+            
+            try {
+                const response = await fetch('/api/run_workflow', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        source_type: sourceType,
+                        analysis_type: analysisType,
+                        hitl_mode: hitlMode
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Réponse:', data);
+                
+                if (data.status === 'completed') {
+                    currentArticles = data.articles || [];
+                    statusDiv.innerHTML = `✅ Workflow terminé en ${data.workflow_duration || '?'}s`;
+                    
+                    // Afficher les actualités
+                    displayNews(currentArticles);
+                    
+                    // Afficher les tendances
+                    displayTrends(data.trends || []);
+                    
+                    // Afficher l'analyse
+                    displayAnalysis(data.analysis || 'Aucune analyse générée');
+                    
+                    document.getElementById('news-count').textContent = currentArticles.length;
+                } else {
+                    statusDiv.innerHTML = `❌ Erreur: ${data.status}`;
+                    newsContainer.innerHTML = `<div class="loading" style="color: red;">Erreur: ${data.status}</div>`;
+                    analysisDiv.innerHTML = `<div class="loading" style="color: red;">Erreur lors de l'analyse</div>`;
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                statusDiv.innerHTML = '❌ Erreur de connexion';
+                newsContainer.innerHTML = `<div class="loading" style="color: red;">❌ Erreur: ${error.message}</div>`;
+                analysisDiv.innerHTML = `<div class="loading" style="color: red;">❌ Erreur: ${error.message}</div>`;
+            } finally {
+                button.disabled = false;
+                button.textContent = '🚀 LANCER LE WORKFLOW';
+            }
+        }
+        
+        function displayNews(articles) {
+            const container = document.getElementById('news-list');
+            if (!articles || articles.length === 0) {
+                container.innerHTML = '<div class="loading">Aucune actualité trouvée</div>';
+                return;
+            }
+            
+            container.innerHTML = articles.map(article => `
+                <div class="news-item" onclick="window.open('${article.link || '#'}', '_blank')">
+                    <div class="news-title">${escapeHtml(article.title || 'Sans titre')}</div>
+                    <div class="news-summary">${escapeHtml((article.summary || '').substring(0, 200))}...</div>
+                    <div class="news-meta">
+                        <span class="news-source">📰 ${article.source || 'Source inconnue'}</span>
+                        <span>🏷️ ${article.type || 'general'}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function displayTrends(trends) {
+            const container = document.getElementById('trends-display');
+            if (!trends || trends.length === 0) {
+                container.innerHTML = '<div class="loading-mini">Aucune tendance disponible</div>';
+                return;
+            }
+            
+            container.innerHTML = trends.map((trend, i) => `
+                <span class="trend-tag">${i+1}. ${escapeHtml(trend)}</span>
+            `).join('');
+        }
+        
+        function displayAnalysis(analysis) {
+            const container = document.getElementById('analysis-result');
+            let formatted = analysis
+                .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+                .replace(/^## (.*?)$/gm, '<h3>$1</h3>')
+                .replace(/^# (.*?)$/gm, '<h3>$1</h3>')
+                .replace(/\n/g, '<br>');
+            container.innerHTML = formatted;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+<footer style="
+    background: linear-gradient(135deg, #0a1a0a 0%, #051005 100%);
+    border-top: 1px solid rgba(80, 255, 36, 0.3);
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    margin-top: 20px;
+">
+    <p>
+        📧 <a href="zo_aouchar@etu.enset-media.ac.ma" style="color: #bfffaf; text-decoration: none;">zo_aouchar@etu.enset-media.ac.ma</a> &nbsp;|&nbsp;
+        📞 +212 661873442 &nbsp;|&nbsp;
+        🎓 [ENSET Mohammadia] &nbsp;|&nbsp;
+        📋 Projet Multi-Agent IA - Mai 2026
+    </p>
+    <p style="font-size: 11px; margin-top: 8px;">
+        © 2026 STRATOS - Système Multi-Agent de Veille Stratégique
+    </p>
+</footer>
+</html>

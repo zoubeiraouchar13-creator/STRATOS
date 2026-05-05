@@ -1,0 +1,375 @@
+/* RESET ET BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0f1a 0%, #0a1a0a 100%);
+    min-height: 100vh;
+    color: #e0e0e0;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    background: rgba(10, 20, 15, 0.95);
+    min-height: 100vh;
+}
+
+/* LOGO */
+.logo {
+    padding: 20px 30px;
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+    border-bottom: 1px solid rgba(80, 255, 36, 0.3);
+}
+
+.logo span {
+    color: #bfffaf;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(135deg, #1a2a1a 0%, #0f1a0f 100%);
+    padding: 20px 30px;
+    text-align: center;
+    border-bottom: 1px solid rgba(80, 255, 36, 0.2);
+}
+
+.subtitle {
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* DASHBOARD 3 COLONNES */
+.dashboard {
+    display: flex;
+    gap: 0;
+    min-height: calc(100vh - 130px);
+}
+
+/* === COLONNE GAUCHE - TENDANCES (verticales) === */
+.trends-column {
+    width: 220px;
+    background: linear-gradient(135deg, #0f1a0f 0%, #0a100a 100%);
+    border-right: 1px solid rgba(80, 255, 36, 0.2);
+    padding: 20px 12px;
+    overflow-y: auto;
+}
+
+.trends-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(80, 255, 36, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #caffbd;
+}
+
+.trends-title .icon {
+    font-size: 22px;
+}
+
+.trends-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.trend-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(80, 255, 36, 0.1);
+    border: 1px solid rgba(80, 255, 36, 0.2);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #ccc;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.trend-badge:hover {
+    background: rgba(80, 255, 36, 0.2);
+    transform: translateX(5px);
+    border-color: rgba(80, 255, 36, 0.5);
+    color: #a4ff8e;
+}
+
+.trend-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(80, 255, 36, 0.2);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #b6ffa3;
+}
+
+/* === COLONNE CENTRALE - ACTUALITÉS === */
+.news-section {
+    flex: 1;
+    background: rgba(15, 25, 20, 0.5);
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(80, 255, 36, 0.3);
+}
+
+.news-header h2 {
+    font-size: 20px;
+    color: #b3ffa0;
+}
+
+.news-count {
+    background: rgba(80, 255, 36, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #adfa99;
+}
+
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+.news-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(80, 255, 36, 0.1);
+}
+
+.news-item:hover {
+    background: rgba(80, 255, 36, 0.08);
+    transform: translateY(-2px);
+    border-color: rgba(80, 255, 36, 0.3);
+}
+
+.news-title {
+    font-weight: bold;
+    color: #adfd98;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.news-summary {
+    color: #bbb;
+    font-size: 13px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.news-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.news-source {
+    color: #c9fdbc;
+    font-weight: 500;
+}
+
+.mentioned-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.tag {
+    background: rgba(80, 255, 36, 0.1);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    color: #aaa;
+}
+
+/* === COLONNE DROITE - ANALYSE === */
+.analysis-section {
+    width: 380px;
+    background: rgba(10, 18, 12, 0.9);
+    border-left: 1px solid rgba(80, 255, 36, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.analysis-header h2 {
+    color: #c5fab7;
+    font-size: 18px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(80, 255, 36, 0.3);
+}
+
+.prompt-input {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(80, 255, 36, 0.2);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    color: #e0e0e0;
+    resize: vertical;
+    margin-bottom: 12px;
+}
+
+.prompt-input::placeholder {
+    color: #666;
+}
+
+.prompt-input:focus {
+    outline: none;
+    border-color: #50ff24;
+}
+
+.btn-analyze {
+    width: 100%;
+    background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.btn-analyze:hover {
+    background: linear-gradient(135deg, #388e3c 0%, #2e7d32 100%);
+    transform: translateY(-1px);
+}
+
+.btn-analyze:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.analysis-content {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #ddd;
+}
+
+.analysis-content h3 {
+    color: #50ff24;
+    font-size: 15px;
+    margin: 15px 0 10px 0;
+}
+
+.analysis-content strong {
+    color: #50ff24;
+}
+
+.refresh-info {
+    text-align: center;
+    font-size: 10px;
+    color: #666;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(80, 255, 36, 0.1);
+}
+
+/* LOADING */
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+}
+
+.spinner {
+    border: 3px solid rgba(80, 255, 36, 0.1);
+    border-top: 3px solid #50ff24;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #50ff24;
+    border-radius: 3px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+    .dashboard {
+        flex-direction: column;
+    }
+    
+    .trends-column {
+        width: 100%;
+        max-height: 150px;
+    }
+    
+    .trends-list {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    
+    .trend-badge {
+        white-space: nowrap;
+    }
+    
+    .analysis-section {
+        width: 100%;
+    }
+}

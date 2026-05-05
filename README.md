@@ -1,9 +1,4 @@
- ____ _____ ____      _  _____ ___  ____  
-/ ___|_   _|  _ \    / \|_   _/ _ \/ ___| 
-\___ \ | | | |_) |  / _ \ | || | | \___ \ 
- ___) || | |  _ <  / ___ \| || |_| |___) |
-|____/ |_| |_| \_\/_/   \_\_| \___/|____/ 
-Système Multi-Agent de Veille Stratégique
+STRATOS : Système Multi-Agent de Veille Stratégique
 
 STRATOS (Système de Traitement et d'Analyse Stratégique Orienté Synthèse) est un système multi-agent intelligent dédié à la veille stratégique sur le Maroc. Il collecte automatiquement les actualités nationales et internationales, enrichit le contexte via recherche vectorielle (RAG), intègre les tendances Google, et génère des analyses d'impact structurées.
 

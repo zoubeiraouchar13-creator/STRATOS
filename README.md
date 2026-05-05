@@ -43,26 +43,3 @@ Type d'analyse : Impact international / Synthèse nationale
 Mode : Automatique / Avec validation humaine
 Cliquez sur LANCER LE WORKFLOW
 Consultez les actualités collectées, les tendances et l'analyse générée
-
-📁 Structure du projet
-STRATOS/
-├── app.py                          # Application Flask
-├── requirements.txt                # Dépendances Python
-├── .env                            # Variables d'environnement
-├── agents/
-│   ├── __init__.py                 # Initialisation du package
-│   ├── base_agent.py               # Classe abstraite BaseAgent
-│   ├── collector_agent.py          # Agent 1 : Collecteur RSS
-│   ├── rag_agent.py                # Agent 2 : RAG Vectoriel
-│   ├── trends_agent.py             # Agent 3 : Google Trends
-│   ├── analyst_agent.py            # Agent 4 : Analyste IA
-│   └── orchestrator.py             # Orchestrateur séquentiel
-├── templates/
-│   └── index.html                  # Interface utilisateur
-├── static/
-│   └── css/
-│       └── style.css               # Styles CSS
-├── data/
-│   └── trends_maroc.csv            # Données Google Trends
-└── memory/
-    └── human_validations.json      # Journal des interventions HITL

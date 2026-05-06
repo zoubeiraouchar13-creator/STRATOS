@@ -73,7 +73,7 @@ class OrchestratorAgent:
         
         builder = StateGraph(StratosState)
         
-        # Ajout des nœuds (chaque nœud = une étape du workflow)
+        # Ajout des noeuds (chaque noeud = une étape du workflow)
         builder.add_node("collect", self._collect_node)
         builder.add_node("index_rag", self._index_rag_node)
         builder.add_node("search_rag", self._search_rag_node)
@@ -81,7 +81,7 @@ class OrchestratorAgent:
         builder.add_node("analyze", self._analyze_node)
         builder.add_node("format_result", self._format_node)
         
-        # Ajout des nœuds de checkpoint humain si HITL activé
+        # Ajout des noeuds de checkpoint humain si HITL activé
         if self.human_in_loop:
             builder.add_node("human_checkpoint_1", self._human_checkpoint_node)
             builder.add_node("human_checkpoint_2", self._human_checkpoint_node)
@@ -138,14 +138,25 @@ class OrchestratorAgent:
     def _index_rag_node(self, state: StratosState) -> StratosState:
         """Nœud 2 : Indexation des articles dans le RAG multi-corpus"""
         print("🗂️ [Orchestrateur] Agent 2/5: Indexation RAG multi-corpus...")
-        
-        result = index_articles.invoke({"articles": state["articles"]})
-        print(f"   {result}")
-        
+    
+        # 1. Indexer les articles (répartition automatique dans les 4 corpus)
+        index_result = index_articles.invoke({"articles": state["articles"]})
+        print(f"   📚 {index_result}")
+    
+        # 2. Rechercher dans tous les corpus pour enrichir le contexte
+        rag_context = search_rag.invoke({
+            "query": "Maroc économie géopolitique actualités",
+            "corpora_list": ["international", "national", "officiel"]
+        })
+    
+        print(f"   ✅ Contexte RAG généré")
+    
         return {
             **state,
-            "current_step": "index_completed"
+            "rag_context": rag_context,
+            "current_step": "rag_completed"
         }
+        
     
     def _search_rag_node(self, state: StratosState) -> StratosState:
         """Nœud 3 : Recherche RAG pour enrichir le contexte"""

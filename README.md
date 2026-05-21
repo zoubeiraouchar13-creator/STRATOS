@@ -22,30 +22,34 @@ Clé API : Groq (gratuite)
 ## ⚙️ Installation  
 1. Cloner le projet
 2.
-'''bash
+```bash
   git clone https://github.com/zoubeiraouchar13-creator/STRATOS
-''' 
-'''bash
+```
+
+```bash
 cd STRATOS
-'''
+```
  
 4. Créer un environnement virtuel
-'''bash  
+```bash  
   python -m venv .venv
-'''
-'''bash
+```
+
+```bash
 .venv\Scripts\activate
-'''
+```
+
 6. Installer les dépendances
-'''bash
+```bash
   pip install -r requirements.txt
-''' 
+```
+
 8. Configurer la clé API Groq  
   Créez un fichier .env à la racine : GROQ_API_KEY=votre_clé_api_groq_ici  
 9. Lancer l'application
-'''bash 
+```bash 
   python app.py
-'''
+```
   L'application est accessible sur : http://localhost:5002  
 
 ## 🎮 Utilisation  

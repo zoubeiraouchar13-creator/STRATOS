@@ -2,6 +2,19 @@
 
 STRATOS (Système de Traitement et d'Analyse Stratégique Orienté Synthèse) est un système multi-agent intelligent dédié à la veille stratégique sur le Maroc. Il collecte automatiquement les actualités nationales et internationales, enrichit le contexte via recherche vectorielle (RAG), intègre les tendances Google, et génère des analyses d'impact structurées.
 
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Flask](https://img.shields.io/badge/Flask-3.1.3-lightgrey)
+![LangChain](https://img.shields.io/badge/LangChain-1.2.17-orange)
+![LangGraph](https://img.shields.io/badge/LangGraph-1.1.10-yellow)
+![Groq](https://img.shields.io/badge/Groq-0.37.1-purple)
+![Transformers](https://img.shields.io/badge/Transformers-5.7.0-red)
+![Torch](https://img.shields.io/badge/Torch-2.11.0-darkred)
+![Scikit‑Learn](https://img.shields.io/badge/Scikit--Learn-1.8.0-green)
+![Pandas](https://img.shields.io/badge/Pandas-3.0.2-blue)
+![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-1.41.1-cyan)
+![Uvicorn](https://img.shields.io/badge/Uvicorn-0.46.0-black)
+![License](https://img.shields.io/badge/License-CC_BY_NC-blue)
+
 ## 🚀 Fonctionnalités  
 Fonctionnalité	Description  
 🤖 5 Agents spécialisés	Collecteur RSS, RAG Vectoriel, Google Trends, Analyste IA  
